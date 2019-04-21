@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">短视频小助手</string>
+    <!-- 快手相关设置-->
+    <string name="gifmaker_helper_title">快手助手</string>
+     <string name="gifmaker_helper_description"> 打开快手助手后，以下功能将自动完成。如\n
+         1. 进入视频播放页，自动关注\n
+         2. 进入视频播放页，自动为用户点赞\n
+         3. 进入视频播放页，自动完成互动评论\n</string>
+
+</resources>

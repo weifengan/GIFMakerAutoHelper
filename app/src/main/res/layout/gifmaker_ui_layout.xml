@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:layout_margin="3dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/home"/>
+
+        <TextView
+            android:id="@+id/lbl_gifmaker_home"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="5dp"
+            android:text="主页"/>
+
+        <ImageButton
+            android:id="@+id/gifmaker_auto"
+            android:layout_margin="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:labelFor="@+id/lbl_gifmaker_status"
+
+            android:background="@mipmap/gifmaker_status_stop"
+             />
+        <TextView
+            android:id="@+id/lbl_gifmaker_status"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="5dp"
+            android:text="启动"/>
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+</android.support.constraint.ConstraintLayout>
