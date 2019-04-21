@@ -6,6 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnSetAlertWindow"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:text="确认开启悬浮窗权限"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="27dp" />
+        <Button
+            android:id="@+id/btnOpenGifMakerHelper"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:text="开启无障碍功能 [快手助手]"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="27dp" />
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
 
 
 </android.support.constraint.ConstraintLayout>
