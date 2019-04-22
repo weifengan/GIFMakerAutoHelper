@@ -40,11 +40,21 @@ public class GifMakerUIBar{
                     btngifmaker_auto.setImageDrawable(context.getResources().getDrawable(R.drawable.gifmaker_status_running));
                 }
                 isRunning=!isRunning;
-                Log.i("快手","点击胃");
 
                 Intent intent = new Intent();
                 intent.setAction(GifMakerService.GIFMAKER_STATUS_CHANGED);
                 intent.putExtra("status",isRunning);
+                mContext.sendBroadcast(intent);
+            }
+        });
+
+        final ImageButton testScroll=(ImageButton)mView.findViewById(R.id.testScroll);
+        testScroll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent();
+                intent.setAction(GifMakerService.GIFMAKER_DO_SCROLL);
                 mContext.sendBroadcast(intent);
             }
         });

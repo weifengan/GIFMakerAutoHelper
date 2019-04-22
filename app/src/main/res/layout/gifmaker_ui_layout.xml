@@ -11,18 +11,12 @@
 
 
         <ImageView
+            android:id="@+id/btnHome"
             android:layout_margin="3dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/home"/>
 
-        <TextView
-            android:id="@+id/lbl_gifmaker_home"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_margin="5dp"
-            android:text="主页"/>
 
         <ImageButton
             android:id="@+id/gifmaker_auto"
@@ -33,13 +27,16 @@
 
             android:background="@mipmap/gifmaker_status_stop"
              />
-        <TextView
-            android:id="@+id/lbl_gifmaker_status"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
+
+        <ImageButton
+            android:id="@+id/testScroll"
             android:layout_margin="5dp"
-            android:text="启动"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:labelFor="@+id/lbl_gifmaker_status"
+
+            android:background="@mipmap/gifmaker_status_stop"
+            />
     </android.support.v7.widget.LinearLayoutCompat>
 
 

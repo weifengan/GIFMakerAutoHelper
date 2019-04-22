@@ -5,9 +5,14 @@
 package com.example.felixwee.gifmakerautohelper;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.Notification;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,8 +35,9 @@ public class GifMakerService extends AccessibilityService {
 
 
     public   boolean isRunning=false;
-    public  static String GIFMAKER_STATUS_CHANGED="GIFMAKER_STATUS_CHANGED";
 
+    public static final String GIFMAKER_STATUS_CHANGED = "GIFMAKER_STATUS_CHANGED";
+    public static final String GIFMAKER_DO_SCROLL = "GIFMAKER_DO_SCROLL";
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
@@ -53,6 +59,13 @@ public class GifMakerService extends AccessibilityService {
         mReceiver=new DynamicReceiver();
         mReceiver.Init(this);
         registerReceiver(mReceiver,filter);
+
+
+        IntentFilter filter2=new IntentFilter();
+        filter2.addAction(GIFMAKER_DO_SCROLL);
+        mReceiver=new DynamicReceiver();
+        mReceiver.Init(this);
+        registerReceiver(mReceiver,filter2);
     }
 
     ///创建UI
@@ -76,7 +89,7 @@ public class GifMakerService extends AccessibilityService {
         wmParams .format=PixelFormat.RGBA_8888;
 
         //设定方式
-        wmParams.gravity = Gravity.TOP | Gravity.RIGHT;
+        wmParams.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
 
         //设置窗口和高度
         wmParams.width=WindowManager.LayoutParams.WRAP_CONTENT;
@@ -103,18 +116,14 @@ public class GifMakerService extends AccessibilityService {
         if(event.getPackageName().equals("com.smile.gifmaker")){
             //获取root
 
-                root=getRootInActiveWindow();
-                 //Log.i("快手","状态改变"+root.getClassName().toString());
-                 MakeAddFriend(root);
-                //MakeAHeart(root);
+            root=getRootInActiveWindow();
+            //Log.i("快手","状态改变"+root.getClassName().toString());
+            MakeAddFriend(root);
+            //MakeAHeart(root);
 
         }else {
             Log.i("快手","root相同");
         }
-
-
-
-
     }
 
     private  AccessibilityNodeInfo currentfollowNode;
@@ -176,5 +185,59 @@ public class GifMakerService extends AccessibilityService {
         Log.i("快手","快手Auto助手服务正在被销毁..");
         mWindowManager.removeView(mView);
         unregisterReceiver(mReceiver);
+    }
+
+
+    //模擬滾動窗口
+    public void MakeScrollAction(){
+
+        AccessibilityNodeInfo play_view_wrapper= GetNodeInfo("com.smile.gifmaker:id/play_view_wrapper");
+        if(play_view_wrapper!=null){
+            Log.i("快手","当前在直播视频页面");
+
+            play_view_wrapper.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+        }
+
+        AccessibilityNodeInfo recycler_view=GetNodeInfo("com.smile.gifmaker:id/recycler_view");
+        if(recycler_view!=null) {
+            Log.i("快手", "当前在普通视频播放页");
+            recycler_view.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+        }
+
+            AccessibilityNodeInfo editorHolder=GetNodeInfo("com.smile.gifmaker:id/editor_holder");
+            if(editorHolder!=null) {
+                Log.i("快手", "模拟点击了文本框");
+                editorHolder.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            }
+
+                AccessibilityNodeInfo editor=GetNodeInfo("com.smile.gifmaker:id/editor");
+
+                Log.i("快手","editor="+editor);
+                if(editor!=null) {
+                    Log.i("快手","获取到文本框，准备写入文字 ");
+
+                    ClipboardManager clipboard = (ClipboardManager)this.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("text", "test");
+                    clipboard.setPrimaryClip(clip);
+//焦点（n是AccessibilityNodeInfo对象）
+                    editor.performAction(AccessibilityNodeInfo.ACTION_FOCUS);
+//粘贴进入内容
+                    editor.performAction(AccessibilityNodeInfo.ACTION_PASTE);
+
+                }
+
+        }
+
+
+
+    public  AccessibilityNodeInfo GetNodeInfo(String ui_id_name){
+        AccessibilityNodeInfo root=getRootInActiveWindow();
+        if(root.getPackageName().equals("com.smile.gifmaker")){
+            List<AccessibilityNodeInfo> list=root.findAccessibilityNodeInfosByViewId(ui_id_name);
+            if(list.size()>0){
+                return list.get(0);
+            }
+        }
+        return  null;
     }
 }
